@@ -52,7 +52,7 @@ return [
 
         'namespace' => 'App\\Admin\\Controllers',
 
-        'middleware' => ['web', 'admin'],
+        'middleware' => ['web', 'admin','admin.lock'],
     ],
 
     /*
@@ -312,6 +312,24 @@ return [
     |
     */
     'extensions' => [
+        'media-manager' => [
 
+            // Select a local disk that you configured in `config/filesystem.php`
+            'disk' => 'uploads'
+        ],
+        'chartjs' => [
+
+            // Set to `false` if you want to disable this extension
+            'enable' => true,
+        ],
+        'cropper' => [
+
+            // 如果要关掉这个扩展，设置为false
+            'enable' => true,
+        ],
+        'material-ui' => [
+    // If the value is set to false, this extension will be disabled
+            'enable' => true
+]
     ],
 ];
