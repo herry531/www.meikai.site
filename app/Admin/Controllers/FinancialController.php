@@ -111,7 +111,8 @@ class FinancialController extends Controller
             $grid->product('进账产品');
             $grid->price('价格');
             $grid->source('来源');
-            $grid->column('images')->urlWrapper();
+//            $grid->column('images')->urlWrapper();
+            $grid->images('图片')->lightbox(['width' => 50, 'height' => 50]);
             $grid->note('备注');
             $grid->date('日期');
             $grid->tools(function ($tools) {

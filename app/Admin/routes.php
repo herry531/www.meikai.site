@@ -17,7 +17,7 @@ Route::group([
     $router->resource('visiting', VisitingController::class);//来访信息
     $router->resource('channel', ChannelController::class);//来源渠道
     $router->resource('tasks', TaskController::class);//任务
-
+    $router->resource('foos', FooController::class);//测试
 
 
     $router->resource('spending', SpendingController::class);//财务支出

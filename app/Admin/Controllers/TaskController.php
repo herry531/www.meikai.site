@@ -118,17 +118,17 @@ class TaskController extends Controller
 
         });
 
-        $grid->tools(function ($tools) {
-            $tools->append(new ShowArtwork());
-        });
-
-        $grid->tools(function ($tools) {
-            $tools->append(new Income());
-        });
-
-        $grid->tools(function ($tools) {
-            $tools->append(new Balance());
-        });
+//        $grid->tools(function ($tools) {
+//            $tools->append(new ShowArtwork());
+//        });
+//
+//        $grid->tools(function ($tools) {
+//            $tools->append(new Income());
+//        });
+//
+//        $grid->tools(function ($tools) {
+//            $tools->append(new Balance());
+//        });
 
 
 

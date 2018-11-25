@@ -130,10 +130,11 @@ class SpendingController extends Controller
             $grid->name('支出人');
             $grid->baoxiao('是否报销');
             $grid->date('日期')->sortable();;
-            $grid->column('images')->urlWrapper();
+//            $grid->column('images')->urlWrapper();
 //            $grid->images('照片')->image('http://www.meikai.site/upload', 100, 100);
 
             //$res = $grid->getFilter()->execute();
+            $grid->images('图片')->lightbox(['width' => 50, 'height' => 50]);
 
             $grid->tools(function ($tools) {
                 $tools->append(new ShowArtwork());
