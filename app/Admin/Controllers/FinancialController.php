@@ -2,6 +2,9 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Extensions\Tools\Balance;
+use App\Admin\Extensions\Tools\Income;
+use App\Admin\Extensions\Tools\ShowArtwork;
 use App\Financial;
 use App\Movie;
 
@@ -72,6 +75,7 @@ class FinancialController extends Controller
                 $show->product('进账产品');
                 $show->price('价格');
                 $show->source('来源');
+                $show->images('照片')->image();
 
                 $show->date('日期');
             }));
@@ -110,6 +114,18 @@ class FinancialController extends Controller
             $grid->column('images')->urlWrapper();
             $grid->note('备注');
             $grid->date('日期');
+            $grid->tools(function ($tools) {
+                $tools->append(new ShowArtwork());
+            });
+
+            $grid->tools(function ($tools) {
+                $tools->append(new Income());
+            });
+
+            $grid->tools(function ($tools) {
+                $tools->append(new Balance());
+            });
+
             $grid->tools(function ($tools) {
                 $tools->batch(function ($batch) {
                     $batch->disableDelete();

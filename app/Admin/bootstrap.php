@@ -22,6 +22,7 @@ use Encore\Admin\Grid\Column;
 use App\Admin\Extensions\Column\ExpandRow;
 
 
+
 Encore\Admin\Form::forget(['map', 'editor']);
 
 Admin::js('/vendor/clipboard/dist/clipboard.min.js');
@@ -29,6 +30,7 @@ Admin::js('/vendor/clipboard/dist/clipboard.min.js');
 Column::extend('urlWrapper', UrlWrapper::class);
 
 Column::extend('expand', ExpandRow::class);
+
 
 Column::extend('prependIcon', function ($value, $icon) {
 

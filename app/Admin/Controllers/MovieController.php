@@ -83,14 +83,32 @@ class MovieController extends Controller
     {
         $grid = new Grid(new Movie);
 
-        $grid->id('序号')->sortable();;
-        $grid->name('姓名');
+//        $grid->id('序号')->sortable();;
+        $grid->column('姓名')->display(function ($name) {
+            if($this->status =='已经来访'){
+                return "<span class='label label-success'>$this->name</span>";
+
+            }elseif($this->status=='需要跟进'){
+                return "<span class='label label-danger'>$this->name</span>";
+            }elseif($this->status=='三次沟通都无意向') {
+                return "<span class='label label-warning'>$this->name</span>";
+            }elseif($this->status=='未沟通'){
+                return "<span >$this->name</span>";
+            }else{
+                return "<span >$this->name</span>";
+            }
+        });
+
         $grid->gender('性别');
+        $grid->city('地区');
+        $grid->age('年龄');
         $grid->phone('电话');
-        $grid->weixin_num('微信号');
+        $grid->purpose('学习目的');
+
         $grid->source('来源渠道');
         $grid->course('意向课程');
-        $grid->care('在意问题点');
+
+        $grid->one_data('沟通时间')->sortable();
         $grid->disableExport();
         $grid->tools(function ($tools) {
             $tools->batch(function ($batch) {
@@ -128,7 +146,9 @@ class MovieController extends Controller
             ->title('基本信息');
         $show->name('姓名');
         $show->age('年龄');
+
         $show->gender('性别');
+
         $show->phone('电话');
         $show->weixin_name('微信名称');
         $show->weixin_num('微信号');
@@ -156,9 +176,10 @@ class MovieController extends Controller
         $form = new Form(new Movie);
 
         $form->text('name', '姓名');
-        $form->select('age', '年龄')->options(['20岁以下'=>'20岁以下','20-30岁'=>'20-30岁','30-40岁'=>'30-40岁','40岁+'=>'40岁+']);
-        $form->select('gender','性别')->options(['男'=>'男','女'=>'女','未知'=>'未知'])->rules('required');
+        $form->radio('age', '年龄')->options(['20岁以下'=>'20岁以下','20-30岁'=>'20-30岁','30-40岁'=>'30-40岁','40岁+'=>'40岁+']);
+        $form->radio('gender','性别')->options(['男'=>'男','女'=>'女','未知'=>'未知'])->rules('required');
 
+        $form->radio('status','跟进程度')->options(['三次沟通都无意向'=>'三次沟通都无意向','需要跟进'=>'需要跟进','已经来访'=>'已经来访','未沟通'=>'未沟通'])->rules('required');
         $form->mobile('phone', '电话');
         $form->text('weixin_name','微信名称');
         $form->text('weixin_num','微信号');

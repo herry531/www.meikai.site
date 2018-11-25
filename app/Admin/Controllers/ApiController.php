@@ -9,10 +9,18 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
 use Illuminate\Support\Facades\Input;
 
+use App\ChinaArea;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+
+
 class ApiController extends Controller
 {
     public function index()
     {
+
+        echo 111;die;
         $num = Input::get('q');
         if($num == '管理费用'){
             $arr = array('1'=>'房租','2'=>'工资','3'=>'办公','4'=>'人员报销','5'=>'社保','6'=>'培训','7'=>'招聘');
@@ -49,5 +57,21 @@ class ApiController extends Controller
         }
 
 
+    }
+
+
+    public function city(Request $request)
+    {
+
+        $provinceId = $request->get('q');
+
+        return ChinaArea::city()->where('parent_id', $provinceId)->get(['id', DB::raw('name as text')]);
+    }
+
+    public function district(Request $request)
+    {
+        $cityId = $request->get('q');
+
+        return ChinaArea::district()->where('parent_id', $cityId)->get(['id', DB::raw('name as text')]);
     }
 }

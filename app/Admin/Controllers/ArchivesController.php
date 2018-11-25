@@ -84,24 +84,24 @@ class ArchivesController extends Controller
     {
         $grid = new Grid(new Archives());
 
-//        $grid->actions(function ($actions) {
-//            // append一个操作
-//
-//            $actions->disableDelete();
-//        });
+
         $grid->model()->orderBy('id', 'desc');
         $grid->name('姓名')->editable();
         $grid->gender('性别');
-        $grid->price('价格');
         $grid->phone('电话');
-        $grid->weixin('微信号');
         $grid->course('学习课程');
+        $grid->price1('已交学费');
+
+        $grid->price2('未交学费');
+        $grid->date1('计划学习时间');
+        $grid->city('所在地区');
         $grid->column('images')->urlWrapper();
 //        $grid->tools(function ($tools) {
 //            $tools->batch(function ($batch) {
 //                $batch->disableDelete();
 //            });
 //        });
+
         $grid->tools(function ($tools) {
             $tools->batch(function ($batch) {
                 $batch->disableDelete();
@@ -112,11 +112,12 @@ class ArchivesController extends Controller
 
             $actions->disableDelete();
         });
-        $grid->source('报名来源');
+
         $grid->note('备注');
-        $grid->start_time('开始学习时间');
+
 
         $grid->filter(function ($filter) {
+
             $filter->like('name','姓名');
             $filter->like('phone','电话');
             $filter->like('weixin','微信号');
@@ -141,7 +142,7 @@ class ArchivesController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(Movie::findOrFail($id));
+        $show = new Show(Archives::findOrFail($id));
 
         $show->panel()
             ->tools(function ($tools) {
@@ -153,21 +154,30 @@ class ArchivesController extends Controller
         $show->panel()
             ->style('danger')
             ->title('基本信息');
-        $show->name('姓名');
-        $show->age('年龄');
-        $show->gender('性别');
+        $show->name('学员姓名');
         $show->phone('电话');
-        $show->weixin_name('微信名称');
-        $show->weixin_num('微信号');
-        $show->source('渠道');
-        $show->city('地区');
+        $show->city('所在地区');
+        $show->weixin('微信号');
+        $show->course('学习课程');
+        $show->price('总学费');
+        $show->price1('已交学费');
+        $show->price1('未交学费');
+        $show->date('报名时间');
+        $show->date1('预计学习时间');
+        $show->date2('实际上课时间');
+        $show->gender('性别');
+        $show->shop('是否开店');
+        $show->weixin('学员微信');
+        $show->source('报名来源');
+        $show->age('年龄');
         $show->purpose('学习目的');
-        $show->course('意向课程');
-        $show->care('在意问题点');
-        $show->text('具体详细信息');
-        $show->one_data('初次沟通时间');
-        $show->tow_data('二次沟通时间');
-        $show->three_data('三次沟通时间');
+        $show->age('年龄');
+        $show->images('学员照片')->image();
+        $show->images1('合同照片')->image();
+
+        $show->content('毕业后跟进信息');
+        $show->note('备注');
+
 
 
         return $show;
@@ -180,13 +190,21 @@ class ArchivesController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new Movie);
+        $form = new Form(new Archives());
 
         $form->text('name', '学员姓名')->rules('required');
-        $form->text('price', '学习价格')->rules('required');
-        $form->select('gender','学员性别')->options(['男'=>'男','女'=>'女'])->rules('required');
-        $form->select('purpose','学习目的')->options(['创业'=>'创业','就业'=>'就业'])->rules('required');
-        $form->number('age','年龄');
+        $form->currency('price', '总学费')->rules('required')->symbol('￥');
+        $form->currency('price1', '已交学费')->rules('required')->symbol('￥');
+        $form->currency('price2', '未交学费')->rules('required')->symbol('￥');
+        $form->date('date', '报名时间')->rules('required');
+        $form->date('date1', '预计学习时间')->format('YYYY-MM');
+        $form->date('date2', '实际上课时间');
+        $form->radio('gender','学员性别')->options(['男'=>'男','女'=>'女'])->rules('required');
+        $form->radio('shop','是否开店')->options(['是'=>'是','否'=>'否'])->rules('required');
+        $form->radio('age', '年龄')->options(['20岁以下'=>'20岁以下','20-30岁'=>'20-30岁','30-40岁'=>'30-40岁','40岁+'=>'40岁+']);
+        $form->radio('purpose','学习目的')->options(['创业'=>'创业','就业'=>'就业','私房'=>'私房','兴趣爱好'=>'兴趣爱好','其它'=>'其它'])->rules('required');
+        $form->image('images','学员照片');
+        $form->image('images1','合同照片');
         $form->mobile('phone', '学员电话')->rules('required');
         $form->text('weixin','学员微信')->rules('required');
         $form->select('source','报名来源')->options(['百度'=>'百度','微博'=>'微博','今日头条'=>'今日头条','360搜索'=>'360搜索','豆瓣'=>'豆瓣','公众号'=>'公众号','朋友圈'=>'朋友圈','抖音'=>'抖音','搜狐'=>'搜狐','美团'=>'美团','熟人介绍'=>'熟人介绍','学员介绍'=>'学员介绍','其它'=>'其它'])->rules('required');
@@ -194,9 +212,8 @@ class ArchivesController extends Controller
         $form->text('course','学习课程')->rules('required');
         $form->text('content','毕业后跟进信息');
         $form->text('note','备注');
-        $form->date('start_time','开始学习日期');
-        $form->text('expect_time','预计学习日期');
-        $form->image('images','照片');
+
+
 
 
 

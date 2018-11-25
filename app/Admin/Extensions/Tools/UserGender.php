@@ -2,6 +2,7 @@
 
 namespace App\Admin\Extensions\Tools;
 
+use App\Task;
 use Encore\Admin\Admin;
 use Encore\Admin\Grid\Tools\AbstractTool;
 use Illuminate\Support\Facades\Request;
@@ -23,10 +24,14 @@ $('input:radio.user-gender').change(function () {
 });
 
 EOT;
+
+
+
     }
 
     public function render()
     {
+
         Admin::script($this->script());
 
         $options = [

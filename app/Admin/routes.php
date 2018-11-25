@@ -16,6 +16,7 @@ Route::group([
     $router->resource('archives', ArchivesController::class);//学员档案
     $router->resource('visiting', VisitingController::class);//来访信息
     $router->resource('channel', ChannelController::class);//来源渠道
+    $router->resource('tasks', TaskController::class);//任务
 
 
 
@@ -24,5 +25,10 @@ Route::group([
 
 
     //接口
-    $router->get('api/city', 'ApiController@index');
+//    $router->get('api/city', 'ApiController@index');
+
+    $router->get('api/city', 'ApiController@city');
+    $router->get('api/district', 'ApiController@district');
+
+
 });
