@@ -129,7 +129,7 @@ class SpendingController extends Controller
             $grid->price('价格');
             $grid->name('支出人');
             $grid->baoxiao('是否报销');
-            $grid->date('日期')->sortable();;
+            $grid->date('日期')->sortable();
 //            $grid->column('images')->urlWrapper();
 //            $grid->images('照片')->image('http://www.meikai.site/upload', 100, 100);
 

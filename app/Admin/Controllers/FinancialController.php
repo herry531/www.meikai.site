@@ -111,14 +111,15 @@ class FinancialController extends Controller
             $grid->product('进账产品');
             $grid->price('价格');
             $grid->source('来源');
+            $grid->source('来源');
 //            $grid->column('images')->urlWrapper();
-            $grid->images('图片')->lightbox(['width' => 50, 'height' => 50]);
+
             $grid->note('备注');
-            $grid->date('日期');
+            $grid->date('日期')->sortable();;
             $grid->tools(function ($tools) {
                 $tools->append(new ShowArtwork());
             });
-
+            $grid->images('图片')->lightbox(['width' => 50, 'height' => 50]);
             $grid->tools(function ($tools) {
                 $tools->append(new Income());
             });
@@ -131,6 +132,11 @@ class FinancialController extends Controller
                 $tools->batch(function ($batch) {
                     $batch->disableDelete();
                 });
+            });
+            $grid->disableExport();
+            $grid->actions(function ($actions) {
+                // append一个操作
+                $actions->disableDelete();
             });
             $grid->actions(function ($actions) {
                 // append一个操作
@@ -151,20 +157,28 @@ class FinancialController extends Controller
     {
 
         return Admin::form(Financial::class, function (Form $form) {
-
-            $form->row(function ($row) use ($form) {
-                $row->width(2)->text('product', '产品')->rules('required');
-                $row->width(2)->currency('price', '价格')->symbol('￥')->rules('required');
-                $row->width(2)->text('source','来源');
-                $row->width(2)->text('note','备注');
-                $row->width(4)->date('date','日期')->rules('required');
-                $row->width(8)->image('images','照片');
-            }, $form);
+//
+//            $form->row(function ($row) use ($form) {
+//                $row->width(2)->text('product', '产品')->rules('required');
+//                $row->width(2)->currency('price', '价格')->symbol('￥')->rules('required');
+//                $row->width(2)->text('source','来源');
+//                $row->width(2)->text('note','备注');
+//                $row->width(4)->date('date','日期')->rules('required');
+//                $row->width(8)->image('images','照片');
+//            }, $form);
             $form->tools(function (Form\Tools $tools) {
                 // 去掉`删除`按钮
                 $tools->disableDelete();
 
             });
+
+            $form->text('product','产品');
+            $form->currency('price','价格')->symbol('￥')->rules('required');
+            $form->text('source','来源');
+            $form->select('name','添加人')->options(['海鸥'=>'海鸥','老鹰'=>'老鹰','猞猁'=>'猞猁','刺猬'=>'刺猬','海龟'=>'海龟'])->rules('required');
+            $form->text('note','备注');
+            $form->date('date','日期')->rules('required');
+            $form->image('images','备注照片');
         });
 
 
